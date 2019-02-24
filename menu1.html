@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="da">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Östers & Orgel</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="Img/ikon_folder_orgel_png/apple%20touch.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Img/ikon_folder_orgel_png/favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="img/ikon_folder_orgel_png/favicon%20url.png">
+    <link rel="manifest" href="myicons/site.webmanifest">
+    <link rel="mask-icon" href="myicons/safari-pinned-tab.svg" color="#5bbad5">
+    <link rel="shortcut icon" href="myicons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="myicons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+</head>
+
+<style>
+    @font-face {
+        font-family: 'fragment_coreroman';
+        src: url('skrifttyper/fragtmentcore/fragmentcore-webfont.woff2') format('woff2'),
+            url('skrifttyper/fragtmentcore/fragmentcore-webfont.woff') format('woff');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    body {
+        background-color: lightgray;
+        box-sizing: :border-box;
+    }
+
+    #popup {
+        top: 0;
+        width: 100vw;
+        height: 100vw;
+        position: fixed;
+        background-color: hsla (0%, 204%, 8%, 74%);
+        display: none;
+        position: absolute;
+
+    }
+
+    #luk button {
+        font-size: 2rem;
+        padding: 1rem 2rem;
+    }
+
+    #indhold {
+        min-height: 50vh;
+        background-color: white;
+        width: 70vw;
+        margin: 4rem auto;
+    }
+
+    header {
+        background-color: #353A3E;
+        padding-top: 6vw;
+        padding-bottom: 6vw;
+        width: 100%;
+        margin: -10;
+
+        position: relative;
+        background-size: 100%;
+
+    }
+
+    nav a:link,
+    nav a:visited,
+    nav a:active {
+        color: white;
+    }
+
+    nav {
+        font-family: courier;
+        text-align: center;
+    }
+
+
+    h1 {
+        font-family: 'fragment_coreroman';
+        color: white;
+        text-align: center;
+        letter-spacing: 0.5em;
+        text-transform: uppercase;
+
+
+    }
+
+    h2 {
+        font-family: courier;
+        text-align: center;
+    }
+
+    button {
+        font-family: courier;
+        font-size: 0.3em;
+    }
+
+    h3 {
+        font-family: 'fragment_coreroman';
+        color: black;
+        font-weight: bold;
+    }
+
+    .item-c {
+
+        padding-bottom: 3vw;
+        padding-right: 3vw;
+
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        background-color: #353A3E;
+        color: white;
+        text-align: center;
+
+    }
+
+    p2 {
+        font-family: courier;
+        color: white;
+    }
+
+    .menu {
+        text-align: center;
+        font-size: 3rem;
+    }
+
+    .style {
+        background-color: #fff;
+        margin: 7px;
+        text-align: center;
+    }
+
+    #navn {
+        height: 7vw;
+        margin-top: 1vw;
+        margin-bottom: 0;
+    }
+
+    p {
+        font-family: courier;
+        margin: 2vw;
+    }
+
+    .img-container {
+        background-color: beige;
+        height: 50vw;
+        overflow: hidden;
+    }
+
+    img {
+        width: 100%;
+    }
+
+    @media only screen and (min-width: 600px) {
+        font-size: 6rem;
+
+        #liste {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+        }
+
+        .img-container {
+            height: 30vw;
+        }
+    }
+
+    @media only screen and (min-width: 800px) {
+        h1 {
+            font-size: 4rem;
+        }
+
+        #liste {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+        }
+
+        .img-container {
+            height: 19vw;
+        }
+    }
+
+    @media only screen and (min-width: 1300px) {
+        body {
+            margin-left: 6vw;
+            margin-right: 6vw;
+        }
+
+        .img-container {
+            height: 15vw;
+        }
+    }
+</style>
+
+
+<body>
+    <header>
+        <h1>Östers & Orgel</h1>
+        <nav>
+            <a href="index.html">Forside</a>
+            <a href="menu1.html">Menu</a>
+            <a href="about.html">About</a>
+        </nav>
+    </header>
+    <div id="popup">
+        <div id="luk">
+            <button>X</button>
+        </div>
+
+        <div id="indhold"></div>
+    </div>
+
+    <h2>Alle Retter</h2>
+    <div class="menu">
+        <button class="filter valgt" data-kategori="alle">Alle</button>
+        <button class="filter" data-kategori="hovedret">Hûitres</button>
+        <button class="filter" data-kategori="dessert">Dessert</button>
+        <button class="filter" data-kategori="drikkelse">Boissions</button>
+    </div>
+
+    <div id="liste">
+    </div>
+
+
+    <script>
+        let alleRetter = [];
+        let filter = "alle";
+        document.addEventListener("DOMContentLoaded", start);
+
+
+        /* start funktionen må gerne ligge for sig selv*/
+
+        function start() {
+            hentJson();
+            async function hentJson() {
+                let jsonData = await fetch("https://mandalskeawebspace.dk/claude_php/clean_up_spreadsheet.php?id=1yOhHlu1TEAvNAvNvnOb-hTCZXCwyDKjSeaxKog9GDU8");
+                alleRetter = await jsonData.json();
+                visRet();
+            }
+
+
+            /* når man kalder på en funktion skal den ligge inde i den samme funktion før den virker*/
+
+            function visRet() {
+                let destination = document.querySelector("#liste");
+                destination.innerHTML = "";
+                alleRetter.forEach(ret => {
+                    if (filter == "alle" || filter == ret.kategori) {
+                        let template = `
+                        <div class="style">
+                            <div class="img-container">
+                                <img src = img/img-mad/${ret.billede}.jpg>
+                            </div>
+                            <h3 id="navn">${ret.navn}</h3>
+                            <p>${ret.kort}</p>
+                            <p>Pris: ${ret.pris},-</p>
+                            <p>${ret.kategori}</p>
+                        </div>`;
+                        destination.insertAdjacentHTML("beforeend", template);
+                        destination.lastElementChild.addEventListener("click", visSingle);
+
+                        function visSingle() {
+                            document.querySelector("#indhold").innerHTML = `
+                       <article class="ret">
+                       <h2>${ret.navn}</h2>
+                    <img class="billede" src=img/img-mad/${ret.billede}.jpg alt=${ret.navn}">
+                    <p>${ret.lang}</p>
+                    </article>`;
+
+                            document.querySelector("#popup").style.display = "block";
+                            document.querySelector("#popup #luk").addEventListener("click", close);
+                        } //visSingle slut
+
+
+                    } //if slut
+                }) //slut forEach
+                hentJson();
+
+                document.querySelectorAll(".filter").forEach(but => {
+                    but.addEventListener("click", filtrering);
+                });
+
+                function filtrering() {
+                    document.querySelectorAll(".filter").forEach(but => {
+                        but.classList.remove("valgt");
+                    })
+                    this.classList.add("valgt");
+                    document.querySelector("h2").textContent = this.textContent;
+                    filter = this.getAttribute("data-kategori");
+                    console.log(filter);
+                    visRet();
+                } //filtering slut
+            } //slut visRet
+
+            function close() {
+                document.querySelector("#popup").style.display = "none";
+            }
+
+
+
+        } //slut start
+    </script>
+    <div class="item-c">
+        <p2> Email:oister_orgel@gmail.com</p2>
+        <br><br>
+        <p2>Tlf:+4523478103</p2>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,149 @@
+img {
+    100%;
+}
+
+/* skrifttyper*/
+@font-face {
+    font-family: 'fragment_coreroman';
+    src: url('skrifttyper/fragtmentcore/fragmentcore-webfont.woff2') format('woff2'),
+        url('skrifttyper/fragtmentcore/fragmentcore-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+h1 {
+    font-family: 'fragment_coreroman';
+    color: white;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.5em;
+
+}
+
+h2 {
+    font-family: courier;
+    text-align: center;
+}
+
+p {
+    font-family: couirer;
+    padding: 1em;
+    font-family: courier;
+}
+
+p1 {
+    font-weight: lighter;
+    font-family: couirer;
+    padding: 1em;
+    font-family: courier;
+}
+
+
+.item-a {
+    grid-area: header;
+    background-color: #353A3E;
+    padding-top: 4vw;
+    padding-bottom: 4vw;
+    padding-right: 4vw;
+    padding-left: 4vw;
+    width: 100%;
+    margin: -10;
+    position: relative;
+}
+
+.item-c {
+
+    padding-bottom: 3vw;
+    padding-right: 3vw;
+
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #353A3E;
+    color: white;
+    text-align: center;
+
+}
+
+p2 {
+    font-family: courier;
+    color: white;
+}
+
+nav a:link,
+nav a:visited,
+nav a:active {
+    color: white;
+}
+
+nav {
+    font-family: courier;
+    text-align: center;
+}
+
+.#about {
+    padding: 0;
+}
+
+#welcome {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+    text-align: center;
+}
+
+.column_1 {
+    font-family: courier;
+    color: white;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-transform: uppercase;
+
+}
+
+
+
+#about .sectionwrapper {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f2f2f2;
+    padding: 1em;
+}
+
+#about .column {
+    flex-basis: 300px;
+    flex-grow: 1;
+    margin: 1em;
+
+
+}
+
+#location .sectionwrapper {
+    flex-direction: row;
+    display: flex;
+    flex-wrap: wrap;
+    background-color: #f2f2f2;
+    padding: 1em;
+
+}
+
+#location .border {
+    border-bottom: solid 2px black;
+    padding: 1em;
+    margin: 1em;
+
+}
+
+#location .column {
+    flex-basis: 300px;
+    flex-grow: 1;
+    font-family: courier;
+    margin: 1em;
+
+}
+
+#column .il {}
